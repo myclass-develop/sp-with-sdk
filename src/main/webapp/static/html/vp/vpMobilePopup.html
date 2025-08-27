@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko" class="spHtml">
+	<head>
+		<title>모바일 신분증</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="SP With Verifier">
+		
+		<link ref rel="icon" href="../../image/favicon.ico">
+		
+		<link href="../../css/mobile.css" rel="stylesheet">
+		
+		<script src="../../js/etc/jquery-3.6.0.js"></script>
+		<script src="../../js/etc/base64.min.js"></script>
+		
+		<script src="../../js/vp/vpMobilePopup.js"></script>
+	</head>
+	
+	<body>
+		<div class="mid-crtfc">
+			<header>
+				<span class="a11y-hidden">모바일 신분증 본인확인 팝업</span>
+			</header>
+			
+			<div class="mobile-view">
+				<div class="top-title">
+					<h1>모바일 신분증</h1>
+					
+					<button id="btnCloseMidCrtfc" type="button" title="모바일 신분증인증 팝업창 닫기" class="close"></button>
+				</div>
+				
+				<div id="layout">
+					<span class="a11y-hidden">모두 동의하고 인증요청 버튼을 클릭하여 모바일 신분증 앱을 호출 하세요.</span>
+					
+					<div class="app-layout">
+						<div class="head">
+							<h2>모바일 신분증</h2>
+						</div>
+						
+						<div class="body"><ul></ul></div>
+						
+						<div class="bottom">
+							<span class="info-text">※ 모바일 신분증을 발급받은 앱 선택</span>
+						</div>
+					</div>
+					
+					<div class="agree-layout">
+						<div class="head">
+							<h2>서비스 이용에 대한 동의</h2>
+							
+							<button id="btnCloseAgreeLayout" type="button" title="서비스 이용에 대한 동의 팝업창 닫기" class="close"></button>
+						</div>
+						
+						<ul class="body">
+							<li id="svcUseStplatPolicy">
+								<p>서비스이용약관동의</p>
+								
+								<a title="서비스이용약관동의" href="#">보기</a>
+							</li>
+							<li id="lndvdlInfoColctUseAgrePolicy">
+								<p>개인정보수집이용동의</p>
+								
+								<a title="개인정보수집이용동의" href="#">보기</a>
+							</li>
+							<li id="esntlIdntfcInfoProcessNticPolicy">
+								<p>고유식별정보처리동의</p>
+								
+								<a title="고유식별정보처리동의" href="#">보기</a>
+							</li>
+							<li id="lndvdlInfoThptyProvdAgrePolicy">
+								<p>제3자정보제공동의</p>
+								
+								<a title="제3자정보제공동의" href="#">보기</a>
+							</li>
+						</ul>
+						
+						<div class="bottom">
+							<button id="btnDoAgreeCrtfc" type="button" class="basic sky full" title="모두 동의하고 인증요청">모두 동의하고 인증요청</button>
+						</div>
+					</div>
+					
+					<div class="crtfc-layout">
+						<span class="a11y-hidden">휴대폰에서 본인확인 완료 후 인증 완료 버튼을 클릭 하세요.</span>
+						
+						<div class="body">
+							<p class="message">입력하신 휴대폰으로 인증 요청 메시지를 보냈습니다.<br>앱에서 인증을 진행해주세요.</p>
+							
+							<div class="provider">
+								<img id="selectedIcon">
+							</div>
+							
+							<div class="call-notice">
+								<p class="question">인증 요청 메시지가 안 온다면?</p>
+								
+								<ul class="answer">
+									<li>입력하신 개인정보가 정확한지 확인해 주세요.</li>
+									<li>모바일 신분증 앱 설치 또는 발급하셨는지 확인해 주세요.</li>
+								</ul>
+								
+								<p class="number">콜센터<span>0000-0000</span></p>
+							</div>
+						</div>
+						
+						<div class="bottom">
+							<button id="btnCloseCrtfcReq" type="button" class="basic white" title="닫기">닫기</button>
+							<button id="btnChkCrtfcCompl" type="button" class="basic sky active" title="인증 완료">인증 완료</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="agree-popup-layout">
+					<div id="svcUseStplat" class="policy">
+						<div class="head">
+							<h2>서비스 이용 약관</h2>
+						</div>
+						
+						<div class="body">
+							<span class="a11y-hidden">서비스 이용 약관 동의 자세히 보기 창이 열렸습니다.</span>
+							
+							<ul>
+								<li>제1조 (목적)</li>
+								
+								<li>이 약관은 행정안전부가 제공하는 모바일 신분증 검증 중계 서비스 이용에 관한 필요한 사항을 규정하는 것을 목적으로 한다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제2조 (용어의 정의)</li>
+								
+								<li>이 약관에서 사용하는 용어의 정의는 다음과 같다.</li>
+								
+								<li>① '모바일 신분증 서비스'이라 함은 이용자가 모바일 신분증이 제공하는 모바일 신분증 어플리케이션(이하 “앱”이라 한다)을 본인의 스마트폰(이하 “단말기”라 한다)에 설치하고 정부기관의 장이 발급하는 전자적 방식의 신분증(이하 “신분증”이라 한다)을 저장하여 필요에 따라 온라인 및 오프라인에서 본인확인, 운전자격 확인, 신원 증명, 연령 확인 등에 사용할 수 있는 서비스를 말한다.</li>
+								
+								<li>② '검증'이라 함은 모바일 신분증이 제공하는 모바일 신분증 검증 어플리케이션(이하 “검증앱”이라 한다)을 이용하여 신분증 소지자가 제시하는 정보가 신분증 소지자 정보임을 확인하는 행위와 이용기관이 이용자의 신원을 확인하는 행위를 말한다.</li>
+								
+								<li>③ ‘모바일 신분증 검증 중계 서비스’라 함은 이용자의 스마트폰에 설치된 모바일 신분증앱에 발급된 모바일 신분증을 이용기관을 대신해 검증해 주는 서비스를 말한다</li>
+								
+								<li>④ ‘이용기관’이라 함은 이용자의 본인확인을 위해 모바일 신분증 검증 중계 서비스를 이용하는 기관을 말한다.</li>
+								
+								<li>⑤ ‘이용자’라 함은 모바일 신분증 검증 중계 서비스를 이용하기 위하여 본인의 정보를 입력하고 본 약관에 동의하여 서비스를 이용하는 자를 말한다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제3조 (약관의 효력 발생)</li>
+								
+								<li>행정안전부가 제공하는 모바일 신분증 검증 중계 서비스를 이용한 때에는 이용자가 이 약관에 동의한 것으로 보아 그 때부터 이 약관은 행정안전부와 이용자 사이에 효력이 발생한다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제4조 (약관의 개정)</li>
+								
+								<li>행정안전부가 이 약관을 개정할 경우에는 그 적용일자부터 개정 후 약관이 효력을 발생한다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제5조 (서비스 이용시간)</li>
+								
+								<li>① 서비스 이용시간은 “모바일 신분증 검증 중계 서비스”의 업무상 또는 기술상 특별한 지장이 없는 한 1일 24시간이다.</li>
+								
+								<li>② 모바일 신분증 검증 중계 서비스 시스템의 점검 및 변경 작업 등으로 인하여 필요한 범위 내에서 서비스를 제공하지 아니 할 수 있다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제6조 (서비스의 정지)</li>
+								
+								<li>① 행정안전부는 모바일 신분증 검증 중계 서비스 제공에 사용되는 설비에 장애가 발생하거나, 그 밖에 부득이한 사정이 있을 경우 서비스의 전부 또는 일부를 일시적으로 정지할 수 있다.</li>
+								
+								<li>② 제1항에 따른 서비스 중단의 경우에는 행정안전부는 미리 그 사실을 이용기관에 통지한다. 다만, 사전 통지가 불가능한 경우에는 그러하지 아니하다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제7조 (정보보호)</li>
+								
+								<li>① 행정안전부는 관련 법령이 정하는 바에 따라 이용자가 모바일 신분증 검증 중계 서비스를 이용하기 위하여 제공한 일체의 개인정보를 보호하고 이를 외부에 유출하거나 공개하지 아니한다.</li>
+								
+								<li>② 행정안전부는 이용자에 대한 정보를 수집할 경우 서비스 이용에 필요한 최소한의 정보만을 수집하되, 다음 각 호의 사항을 필수사항으로 하고, 그 밖의 사항을 선택사항으로 한다.</li>
+								
+								<li>1. 성명</li>
+								
+								<li>2. 휴대폰 번호</li>
+								
+								<li>③ 제공된 개인정보는 이용자의 동의 없이 목적 외로 이용하거나 제3자에게 제공하여서는 아니 된다. 다만, 법령에 특별한 규정이 있는 경우에는 예외로 한다.</li>
+								
+								<li>④ 행정안전부가 제3항에 의하여 이용자의 동의를 받아야 하는 경우에는 개인정보를 제공받는 자, 개인정보를 제공받는 자의 개인정보 이용 목적, 제공하는 개인정보의 항목을 미리 명시하거나 고지하여야 한다.</li>
+								
+								<li>⑤ 행정안전부는 이용자가 입력한 개인정보를 이용 후 즉시 삭제하여 저장하지 않는다.</li>
+								
+								<li>⑥ 행정안전부는 개인정보가 분실, 도난, 누출, 변조 또는 훼손되지 않도록 안정성의 확보에 필요한 기술적, 제도적 대책을 수립하여 안전한 모바일 신분증 검증 중계 서비스의 이용을 도모한다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제8조 (이용자의 의무)</li>
+								
+								<li>① 이용자의 개인정보의 비밀보호를 위한 장치의 관리책임은 이용자에게 있으며 개인정보가 저장된 장치를 제3자에게 이용하게 하여서는 아니 된다.</li>
+								
+								<li>② 행정안전부는 이용자의 과실로 인하여 유출된 정보에 대하여는 책임을 지지 않는다.</li>
+								
+								<li>
+									③ 이용자는 다음 각 호의 행위를 하여서는 아니 된다.
+									
+									<ul>
+										<li>1. 모바일 신분증 검증 중계 서비스에 장애나 중단을 초래하는 일체의 행위</li>
+										
+										<li>2. 다른 사람에게 본인의 서비스 이용 권한을 대여, 양도하거나 접근 권한을 부여하는 행위(이용자는 반드시 본인의 서비스 단말기에 본인의 PIN번호 및 생체정보만을 등록하여 사용해야 합니다.)</li>
+										
+										<li>3. 제공받은 모바일 신분증 검증 중계 서비스 내용 또는 형식의 위ㆍ변조와 그 밖의 부정행위</li>
+									</ul>
+								</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제9조 (면책)</li>
+								
+								<li>① 행정안전부의 귀책 사유로 판명된 경우를 제외하고, 이용자가 모바일 신분증 검증 중계 서비스의 사용으로 인하여 입은 손해에 대해서는 책임을 지지 아니한다.</li>
+								
+								<li>② 행정안전부는 제5조 2항 및 제6조 따른 서비스 중단으로 인한 손해에 대하여 책임을 지지 않습니다.</li>
+							</ul>
+							
+							<br>
+							
+							<ul>
+								<li>제10조 (관할)</li>
+								
+								<li>모바일 신분증 검증 중계 서비스와 이용자 간에 발생한 서비스 이용에 관한 분쟁은 대한민국 법을 적용하며, 행정안전부 주소지의 관할 법원에 제기한다.</li>
+							</ul>
+						</div>
+						
+						<div class="bottom">
+							<button type="button" class="basic full">닫기</button>
+						</div>
+					</div>
+					
+					<div id="lndvdlInfoColctUseAgre" class="policy">
+						<div class="head">
+							<h2>개인정보 수집 및 이용 동의</h2>
+						</div>
+						
+						<div class="body">
+							<span class="a11y-hidden">개인정보 수집 및 이용 동의 자세히 보기 창이 열렸습니다.</span>
+							
+							<ul>
+								<li>본인은 행정안전부가 제공하는 "모바일 신분증 검증 중계 서비스" 이용을 위해 아래와 같이 개인정보를 수집·이용하는데 동의합니다.</li>
+								
+								<li>
+									1. 개인정보 수집·이용 항목
+									
+									<ul>
+										<li>- 모바일 신분증 검증 중계 서비스: <strong>이름, 핸드폰번호</strong></li>
+									</ul>
+								</li>
+								
+								<li>
+									2. 개인정보 수집·이용 목적
+									
+									<ul>
+										<li>- 모바일 신분증 검증 중계 서비스: <strong>모바일 신분증 신원정보 제출 PUSH발송 요청</strong></li>
+									</ul>
+								</li>
+								
+								<li>
+									3. 개인정보 보유기간:
+									
+									<ul>
+										<li>- 모바일 신분증 검증 중계 서비스: <strong>목적달성(PUSH발송) 후 즉시 파기</strong></li>
+									</ul>
+								</li>
+								
+								<li>
+									동의를 거부하는 경우에 대한 안내: <br>
+									위의 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.<br>
+									그러나 동의를 거부할 경우 모바일 신분증 검증 중계 서비스 이용에 제한을 받을 수 있습니다.<br>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="bottom">
+							<button type="button" class="basic full">닫기</button>
+						</div>
+					</div>
+				
+					<div id="esntlIdntfcInfoProcessNtic" class="policy">
+						<div class="head">
+							<h2>고유식별정보 처리 고지</h2>
+						</div>
+						
+						<div class="body">
+							<span class="a11y-hidden">고유식별정보 처리 고지 동의 자세히 보기 창이 열렸습니다.</span>
+							
+							<ul>
+								<li>1. 고유식별정보의 처리에 관한 사항</li>
+								
+								<li>“이용기관명”이 제공하는 "서비스명” 이용을 위해 아래와 같이 귀하의 고유식별정보를 처리하고자 합니다.</li>
+								
+								<li>
+									<ul>
+										<li>- 수집 및 이용 항목: <strong>고유식별정보항목</strong></li>
+										
+										<li>- 수집 및 이용 목적: <strong>고유식별정보 수집 및 이용 목적</strong></li>
+										
+										<li>- 보유기간: <strong>00년</strong></li>
+									</ul>
+								</li>
+								
+								<li>법적 처리 근거: 법적근거</li>
+							</ul>
+						</div>
+						
+						<div class="bottom">
+							<button type="button" class="basic full">닫기</button>
+						</div>
+					</div>
+				
+					<div id="lndvdlInfoThptyProvdAgre" class="policy">
+						<div class="head">
+							<h2>개인정보 제3자 제공 동의</h2>
+						</div>
+						
+						<div class="body">
+							<span class="a11y-hidden">개인정보 제3자 제공 동의 자세히 보기 창이 열렸습니다.</span>
+							
+							<ul>
+								<li>본인은 행정안전부가 제공하는 "모바일 신분증 검증 중계 서비스 이용을 위해 아래와 같이 개인정보를 제3자 제공하는데 동의합니다.</li>
+								
+								<li>1. 제공 하는 자: 행정안전부</li>
+								
+								<li>
+									<ul>
+										<li>2. 제공 받는 자</li>
+										
+										<li>① <strong>한국조폐공사</strong></li>
+										
+										<li>② 이용기관명</li>
+									</ul>
+								</li>
+								
+								<li>
+									<ul>
+										<li>3. 제공 목적</li>
+										
+										<li>① 모바일 신분증 앱 운영사: <strong>PUSH 인증 요청</strong></li>
+										
+										<li>② 이용기관명: 이용기관 서비스의 개인정보 제공 목적</li>
+									</ul>
+								</li>
+								
+								<li>
+									<ul>
+										<li>4. 제공 항목:</li>
+										
+										<li>① 모바일 신분증 앱 운영사: <strong>이름, 핸드폰번호</strong></li>
+										
+										<li>② 이용기관명: 개인정보 항목</li>
+									</ul>
+								</li>
+								
+								<li>
+									<ul>
+										<li>5. 제공받는 자의 개인정보 보유기간:</li>
+										
+										<li>① 모바일 신분증 앱 운영사: <strong>목적달성(PUSH발송) 후 즉시 파기</strong></li>
+										
+										<li>② 이용기관 서비스명: 00년</li>
+									</ul>
+								</li>
+								
+								<li>
+									동의를 거부하는 경우에 대한 안내:<br> 위의 개인정보 제3자 제공에 대한 동의를 거부할 권리가 있습니다.<br>
+									그러나 동의를 거부할 경우 모바일 신분증 검증 중계 서비스 이용에 제한을 받을 수 있습니다.<br>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="bottom">
+							<button type="button" class="basic full">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

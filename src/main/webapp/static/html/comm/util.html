@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>SP 테스트 화면 - Util</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="SP With Verifier">
+		
+		<link ref rel="icon" href="../../image/favicon.ico">
+		
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/style.css">
+		<link rel="stylesheet" href="../../css/font.css">
+		
+		<script src="../../js/etc/jquery-3.6.0.js"></script>
+		<script src="../../js/etc/base64.min.js"></script>
+		
+		<script src="../../js/comm/common.js"></script>
+		
+		<style type="text/css">
+			input[type="file"] {
+				display: block;
+			}
+			
+			img {
+				display: none;
+			}
+		</style>
+		
+		<script src="../../js/comm/util.js"></script>
+	</head>
+	
+	<body>
+		<div class="wrap">
+	    	<div class="box-group">
+				<a class="btn" href="../vp/vp.html">VP 검증</a>
+				<a class="btn" href="../comm/revp.html">재검증</a>
+				<a class="btn" href="../comm/vpdata.html">VP데이터</a>
+				<a class="btn selected" href="../comm/util.html">Util</a>
+				<a class="btn" href="../comm/verifyConfig.html">verifyConfig.json 생성</a>
+			</div>
+
+			<form id="imageToHexForm">
+				<div class="box-group">
+					<h1 class="box-tit">Image to Hex</h1>
+					
+					<p>UI 설명: 대상 데이터를 입력한 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="imageToHexBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="imageToHex1">Image</label>
+							
+							<input type="file" id="imageToHex1">
+						</div>
+						
+						<div class="box-line">
+							<label for="imageToHex2">Hex</label>
+							
+							<textarea id="imageToHex2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="hexToImageForm">
+				<div class="box-group">
+					<h1 class="box-tit">Hex to Image</h1>
+					
+					<p>UI 설명: Hex String을 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="hexToImageBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="hexToImage1">Hex</label>
+							
+							<textarea id="hexToImage1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="hexToImage2">Image</label>
+							
+							<input type="image" id="hexToImage2" alt="Hex To Image">
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="stringToHexForm">
+				<div class="box-group">
+					<h1 class="box-tit">String to Hex</h1>
+					
+					<p>UI 설명: 대상 데이터를 입력한 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="stringToHexBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="stringToHex1">String</label>
+							
+							<textarea id="stringToHex1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="stringToHex2">Hex</label>
+							
+							<textarea id="stringToHex2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="hexToStringForm">
+				<div class="box-group">
+					<h1 class="box-tit">Hex to String</h1>
+					
+					<p>UI 설명: Hex String을 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="hexToStringBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="hexToString1">Hex</label>
+							
+							<textarea id="hexToString1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="hexToString2">String</label>
+							
+							<textarea id="hexToString2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="imageToBase64Form">
+				<div class="box-group">
+					<h1 class="box-tit">Image to Base64</h1>
+					
+					<p>UI 설명: 이미지 파일을 선택한 후 변환을 실행 한다.<br>변환한 base64 string은 application.properties 파일의 app.sp-bi-image-base64 항목에 적용 가능.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="imageToBase64Btn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="imageToBase641">Image</label>
+							
+							<input type="file" id="imageToBase641">
+						</div>
+						
+						<div class="box-line">
+							<label for="imageToBase642">Base64</label>
+							
+							<textarea id="imageToBase642"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="base64ToImageForm">
+				<div class="box-group">
+					<h1 class="box-tit">Base64 to Image</h1>
+					
+					<p>UI 설명: Base64 String을 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="base64ToImageBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="base64ToImage1">Base64</label>
+							
+							<textarea id="base64ToImage1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="base64ToImage2">Image</label>
+							
+							<input type="image" id="base64ToImage2" alt="Base64 To Image">
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="jsonToBase64Form">
+				<div class="box-group">
+					<h1 class="box-tit">Json to Base64</h1>
+					
+					<p>UI 설명: String 데이터 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="jsonToBase64Btn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="jsonToBase641">Json</label>
+							
+							<textarea id="jsonToBase641"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="jsonToBase642">Base64</label>
+							
+							<textarea id="jsonToBase642"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="base64ToJsonForm">
+				<div class="box-group">
+					<h1 class="box-tit">Base64 to Json</h1>
+					
+					<p>UI 설명: Base64 String을 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="base64ToJsonBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="base64ToJson1">Base64</label>
+							
+							<textarea id="base64ToJson1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="base64ToJson2">Json</label>
+							
+							<textarea id="base64ToJson2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="rsaEncryptForm">
+				<div class="box-group">
+					<h1 class="box-tit">RSA 암호화</h1>
+					
+					<p>UI 설명: 복호화 대상 DID, String을 입력 후 변환을 실행 한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="rsaEncryptBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="decryptTargetDid">복호화 대상 DID</label>
+							
+							<input type="text" id="decryptTargetDid" value="did:kr:mobileid:2DzMFHdMMvH9DHyC8TKHmPpFxH6k">
+							
+							<label for="rsaEncrypt1">String</label>
+							
+							<textarea id="rsaEncrypt1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="rsaEncrypt2">RSA</label>
+							
+							<textarea id="rsaEncrypt2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<form id="rsaDecryptForm">
+				<div class="box-group">
+					<h1 class="box-tit">RSA 복호화</h1>
+					
+					<p>UI 설명: RSA String을 입력 후 변환을 실행 한다.(did:kr:mobileid:2DzMFHdMMvH9DHyC8TKHmPpFxH6k DID로 암호화 한 문자열만 복호화 가능)</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="rsaDecryptBtn">변환</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="rsaDecrypt1">RSA</label>
+							
+							<textarea id="rsaDecrypt1"></textarea>
+						</div>
+						
+						<div class="box-line">
+							<label for="rsaDecrypt2">String</label>
+							
+							<textarea id="rsaDecrypt2"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

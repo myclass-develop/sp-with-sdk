@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>SP 테스트 화면 - VP 검증</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="SP With Verifier">
+		
+		<link ref rel="icon" href="../../image/favicon.ico">
+		
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/style.css">
+		<link rel="stylesheet" href="../../css/font.css">
+		
+		<script src="../../js/etc/jquery-3.6.0.js"></script>
+		<script src="../../js/etc/base64.min.js"></script>
+		<script src="../../js/etc/qrcode.js"></script>
+		
+		<script src="../../js/comm/common.js"></script>
+		
+		<script src="../../js/vp/vpPc.js"></script>
+	</head>
+	
+	<body>
+		<div class="wrap">
+			<div class="box-group">
+				<a class="btn selected" href="../vp/vp.html">VP 검증</a>
+				<a class="btn" href="../comm/revp.html">재검증</a>
+				<a class="btn" href="../comm/vpdata.html">VP데이터</a>
+				<a class="btn" href="../comm/util.html">Util</a>
+				<a class="btn" href="../comm/verifyConfig.html">verifyConfig.json 생성</a>
+			</div>
+			
+			<div class="box-group">
+				<a class="btn" href="../vp/vpQrcpm.html">QR-CPM</a>
+				<a class="btn" href="../vp/vpQrmpm.html">QR-MPM</a>
+				<a class="btn" href="../vp/vpPush.html">Push</a>
+				<a class="btn" href="../vp/vpWeb2app.html">Web to App</a>
+				<a class="btn selected" href="../vp/vpPc.html">UI-UX(PC) Sample</a>
+				<a class="btn" href="../vp/vpMobile.html">UI-UX(Mobile) Sample</a>
+			</div>
+			
+			<form id="form" name="form">
+				<div class="box-group">
+					<h1 class="box-tit">VP 검증 - UI-UX(PC)Sample</h1>
+					
+					<p>UI 설명: 응대 장치에서 SP 서버로 QR정보요청 후 신분증 앱에서 QR 스캔 후 업무처리 완료 후 서비스 제공 전까지 진행한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="openPageBtn">팝업 호출</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="svcCode">서비스코드</label>
+							<select id="svcCode" name="svcCode" required></select>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

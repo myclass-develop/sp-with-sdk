@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+logs/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -18,6 +19,18 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -33,6 +46,30 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+### Some additional ignores (sort later)
+*.DS_Store
+*.sw?
+.#*
+*#
+*~
+.classpath
+.project
+.settings
+bin
+build
+target
+dependency-reduced-pom.xml
+*.sublime-*
+/scratch
+.gradle
+README.html
+*.iml
+.idea
+.exercism

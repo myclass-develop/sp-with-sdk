@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko" class="spHtml">
+	<head>
+		<title>모바일 신분증</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="SP With Verifier">
+		
+		<link ref rel="icon" href="../../image/favicon.ico">
+		
+		<link href="../../css/pc.css" rel="stylesheet">
+		
+		<script src="../../js/etc/jquery-3.6.0.js"></script>
+		<script src="../../js/etc/base64.min.js"></script>
+		<script src="../../js/etc/qrcode.js"></script>
+		
+		<script src="../../js/vp/vpPcPopup.js"></script>
+	</head>
+	
+	<body>
+		<div class="mid-crtfc">
+			<div id="contents">
+				<header>
+					<span class="a11y-hidden">모바일 신분증 본인확인 팝업</span>
+				</header>
+				
+				<div class="pc-view">
+					<div class="top-title">
+						<h1><span>모바일 신분증</span></h1>
+					</div>
+					
+					<div id="layout">
+						<div class="ca-layout">
+							<span class="a11y-hidden">앤터키를 눌러 모바일 신분증을 발급받은 앱을 선택해 주세요.</span>
+							
+							<input type="hidden" id="svcCode" value="">
+							<input type="hidden" id="appCode" value="">
+							
+							<div class="ca-list">
+								<ul id="caList"></ul>
+								
+								<div id="caCerver" class="cerver-hide"></div>
+							</div>
+							
+							<div class="info-text">※ 모바일 신분증을 발급받은 앱 선택</div>
+						</div>
+						
+						<div class="interface-layout">
+							<div class="tab-menu">
+								<span class="a11y-hidden">탭키를 눌러 인터페이스를 선택 하세요.</span>
+								
+								<h2>본인확인 정보 입력</h2>
+								
+								<ul>
+									<li id="push" class="selected">
+										<span title="PUSH" tabindex="0">PUSH</span>
+									</li>
+									
+									<li id="qr">
+										<span title="QR" tabindex="0">QR</span>
+									</li>
+								</ul>
+							</div>
+							
+							<div class="tab-content">
+								<span class="a11y-hidden">본인확인 정보, 서비스 이용에 대한 동의를 선택 후 인증 요청 버튼을 클릭하세요.</span>
+								
+								<div id="tabPush">
+									<ul class="user-info">
+										<li>
+											<div class="ul-th">
+												<label for="name">이름</label>
+											</div>
+											
+											<div class="ul-td">
+												<input type="text" id="name" name="name" title="이름" required placeholder="홍길동">
+											</div>
+										</li>
+										
+										<li>
+											<div class="ul-th">
+												<label for="telno">휴대폰 번호</label>
+											</div>
+											
+											<div class="ul-td">
+												<input type="text" id="telno" name="telno" maxlength="11" inputmode="numeric" title="휴대폰 번호" required placeholder="01012341234">
+											</div>
+										</li>
+									</ul>
+								</div>
+								
+								<div id="tabQr">
+									<div class="qr-info">
+										<span class="a11y-hidden">탭 키를 통해 다음 단계로 이동하여 서비스 이용에 대한 동의를 하시면 QR 이미지가 발급됩니다.</span>
+										
+										<img src="data:image/png;base64,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" alt="경고 아이콘">
+										
+										서비스 이용에 대한 동의를 하시면 QR 이미지가 발급됩니다.
+									</div>
+									
+									<div class="qr-wait">
+										<span class="a11y-hidden">QR 이미지를 발급중입니다.</span>
+										
+										<span>QR 이미지를 발급중입니다.</span>
+									</div>
+									
+									<div class="qr-success">
+										<span class="a11y-hidden">180초 이내에 모바일 신분증 앱으로 QR코드를 촬영해 주세요.</span>
+										
+										<div id="qrCodeArea" class="qr-code-area">
+											<img src="data:image/png;base64,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" alt="본인확인을 위한 QR 이미지. 국가 모바일 신분증 앱에서 QR코드 촬영 버튼을 눌러 QR코드를 촬영해주세요.">
+										</div>
+										
+										<div class="qr-scnd">
+											<p>
+												<span id="qrCounter">180</span>
+												<span>초</span>
+												<span>이내에 모바일 신분증 앱으로 QR코드를 촬영해 주세요.</span>
+											</p>
+										</div>
+									</div>
+									
+									<div class="qr-fail">
+										<span class="a11y-hidden">QR 이미지를 발급중 오류가 발생했습니다.</span>
+										
+										<span>QR 이미지를 발급중 오류가 발생했습니다.</span>
+									</div>
+								</div>
+							</div>
+							
+							<dl class="agree">
+								<dt>
+									<span class="a11y-hidden">서비스 이용에 대한 동의. 전체 동의를 선택하시면 인증 요청을 진행 할 수 있습니다.</span>
+									
+									<span>서비스 이용에 대한 동의</span>
+									
+									<label for="allAgree" class="all-btn">
+										<input id="allAgree" type="checkbox" title="전체동의 선택">
+										
+										<span class="a11y-hidden" >서비스 이용에 대한 동의</span>전체동의
+									</label>
+								</dt>
+								
+								<dd class="agree-list">
+									<ul>
+										<li>
+											<input id="svcUseStplatChk" type="checkbox" title="서비스이용약관동의">
+											
+											<label for="svcUseStplatChk">서비스이용약관동의</label>
+											
+											<button type="button" title="서비스이용약관동의보기" class="btn">보기</button>
+										</li>
+										
+										<li>
+											<input id="lndvdlInfoColctUseAgreChk" type="checkbox" title="개인정보수집이용동의">
+											
+											<label for="lndvdlInfoColctUseAgreChk">개인정보수집이용동의</label>
+											
+											<button type="button" title="개인정보수집이용동의 보기" class="btn">보기</button>
+										</li>
+										
+										<li>
+											<input id="esntlIdntfcInfoProcessNticChk" type="checkbox" title="고유식별정보처리동의">
+											
+											<label for="esntlIdntfcInfoProcessNticChk">고유식별정보처리동의</label>
+											
+											<button type="button" title="고유식별정보처리동의보기" class="btn">보기</button>
+										</li>
+										
+										<li>
+											<input id="lndvdlInfoThptyProvdAgreChk" type="checkbox" title="제3자정보제공동의">
+											
+											<label for="lndvdlInfoThptyProvdAgreChk">제3자정보제공동의</label>
+											
+											<button type="button" title="제3자정보제공동의보기" class="btn">보기</button>
+										</li>
+									</ul>
+								</dd>
+							</dl>
+							
+							<div class="btn-area">
+								<button id="btnCloseMidCrtfc" type="button" class="basic white w50" title="닫기">닫기</button>
+								<button id="btnReqPush" type="button" class="basic sky w50" title="인증 요청">인증 요청</button>
+								<button id="btnChkCrtfcCmpl" type="button" class="basic sky w50" title="인증 완료">인증 완료</button>
+							</div>
+						</div>
+						
+						<div class="agree-popup">
+							<div id="svcUseStplat" class="policy">
+								<span class="a11y-hidden">서비스 이용 약관 동의 내용</span>
+								
+								<div class="header">서비스 이용 약관</div>
+								
+								<div class="cont">
+									<ul>
+										<li>제1조 (목적)</li>
+										
+										<li>이 약관은 행정안전부가 제공하는 모바일 신분증 검증 중계 서비스 이용에 관한 필요한 사항을 규정하는 것을 목적으로 한다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제2조 (용어의 정의)</li>
+										
+										<li>이 약관에서 사용하는 용어의 정의는 다음과 같다.</li>
+										
+										<li>① '모바일 신분증 서비스'이라 함은 이용자가 모바일 신분증이 제공하는 모바일 신분증 어플리케이션(이하 “앱”이라 한다)을 본인의 스마트폰(이하 “단말기”라 한다)에 설치하고 정부기관의 장이 발급하는 전자적 방식의 신분증(이하 “신분증”이라 한다)을 저장하여 필요에 따라 온라인 및 오프라인에서 본인확인, 운전자격 확인, 신원 증명, 연령 확인 등에 사용할 수 있는 서비스를 말한다.</li>
+										
+										<li>② '검증'이라 함은 모바일 신분증이 제공하는 모바일 신분증 검증 어플리케이션(이하 “검증앱”이라 한다)을 이용하여 신분증 소지자가 제시하는 정보가 신분증 소지자 정보임을 확인하는 행위와 이용기관이 이용자의 신원을 확인하는 행위를 말한다.</li>
+										
+										<li>③ ‘모바일 신분증 검증 중계 서비스’라 함은 이용자의 스마트폰에 설치된 모바일 신분증앱에 발급된 모바일 신분증을 이용기관을 대신해 검증해 주는 서비스를 말한다</li>
+										
+										<li>④ ‘이용기관’이라 함은 이용자의 본인확인을 위해 모바일 신분증 검증 중계 서비스를 이용하는 기관을 말한다.</li>
+										
+										<li>⑤ ‘이용자’라 함은 모바일 신분증 검증 중계 서비스를 이용하기 위하여 본인의 정보를 입력하고 본 약관에 동의하여 서비스를 이용하는 자를 말한다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제3조 (약관의 효력 발생)</li>
+										
+										<li>행정안전부가 제공하는 모바일 신분증 검증 중계 서비스를 이용한 때에는 이용자가 이 약관에 동의한 것으로 보아 그 때부터 이 약관은 행정안전부와 이용자 사이에 효력이 발생한다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제4조 (약관의 개정)</li>
+										
+										<li>행정안전부가 이 약관을 개정할 경우에는 그 적용일자부터 개정 후 약관이 효력을 발생한다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제5조 (서비스 이용시간)</li>
+										
+										<li>① 서비스 이용시간은 “모바일 신분증 검증 중계 서비스”의 업무상 또는 기술상 특별한 지장이 없는 한 1일 24시간이다.</li>
+										
+										<li>② 모바일 신분증 검증 중계 서비스 시스템의 점검 및 변경 작업 등으로 인하여 필요한 범위 내에서 서비스를 제공하지 아니 할 수 있다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제6조 (서비스의 정지)</li>
+										
+										<li>① 행정안전부는 모바일 신분증 검증 중계 서비스 제공에 사용되는 설비에 장애가 발생하거나, 그 밖에 부득이한 사정이 있을 경우 서비스의 전부 또는 일부를 일시적으로 정지할 수 있다.</li>
+										
+										<li>② 제1항에 따른 서비스 중단의 경우에는 행정안전부는 미리 그 사실을 이용기관에 통지한다. 다만, 사전 통지가 불가능한 경우에는 그러하지 아니하다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제7조 (정보보호)</li>
+										
+										<li>① 행정안전부는 관련 법령이 정하는 바에 따라 이용자가 모바일 신분증 검증 중계 서비스를 이용하기 위하여 제공한 일체의 개인정보를 보호하고 이를 외부에 유출하거나 공개하지 아니한다.</li>
+										
+										<li>② 행정안전부는 이용자에 대한 정보를 수집할 경우 서비스 이용에 필요한 최소한의 정보만을 수집하되, 다음 각 호의 사항을 필수사항으로 하고, 그 밖의 사항을 선택사항으로 한다.</li>
+										
+										<li>1. 성명</li>
+										
+										<li>2. 휴대폰 번호</li>
+										
+										<li>③ 제공된 개인정보는 이용자의 동의 없이 목적 외로 이용하거나 제3자에게 제공하여서는 아니 된다. 다만, 법령에 특별한 규정이 있는 경우에는 예외로 한다.</li>
+										
+										<li>④ 행정안전부가 제3항에 의하여 이용자의 동의를 받아야 하는 경우에는 개인정보를 제공받는 자, 개인정보를 제공받는 자의 개인정보 이용 목적, 제공하는 개인정보의 항목을 미리 명시하거나 고지하여야 한다.</li>
+										
+										<li>⑤ 행정안전부는 이용자가 입력한 개인정보를 이용 후 즉시 삭제하여 저장하지 않는다.</li>
+										
+										<li>⑥ 행정안전부는 개인정보가 분실, 도난, 누출, 변조 또는 훼손되지 않도록 안정성의 확보에 필요한 기술적, 제도적 대책을 수립하여 안전한 모바일 신분증 검증 중계 서비스의 이용을 도모한다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제8조 (이용자의 의무)</li>
+										
+										<li>① 이용자의 개인정보의 비밀보호를 위한 장치의 관리책임은 이용자에게 있으며 개인정보가 저장된 장치를 제3자에게 이용하게 하여서는 아니 된다.</li>
+										
+										<li>② 행정안전부는 이용자의 과실로 인하여 유출된 정보에 대하여는 책임을 지지 않는다.</li>
+										
+										<li>
+											③ 이용자는 다음 각 호의 행위를 하여서는 아니 된다.
+											
+											<ul>
+												<li>1. 모바일 신분증 검증 중계 서비스에 장애나 중단을 초래하는 일체의 행위</li>
+												
+												<li>2. 다른 사람에게 본인의 서비스 이용 권한을 대여, 양도하거나 접근 권한을 부여하는 행위(이용자는 반드시 본인의 서비스 단말기에 본인의 PIN번호 및 생체정보만을 등록하여 사용해야 합니다.)</li>
+												
+												<li>3. 제공받은 모바일 신분증 검증 중계 서비스 내용 또는 형식의 위ㆍ변조와 그 밖의 부정행위</li>
+											</ul>
+										</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제9조 (면책)</li>
+										
+										<li>① 행정안전부의 귀책 사유로 판명된 경우를 제외하고, 이용자가 모바일 신분증 검증 중계 서비스의 사용으로 인하여 입은 손해에 대해서는 책임을 지지 아니한다.</li>
+										
+										<li>② 행정안전부는 제5조 2항 및 제6조 따른 서비스 중단으로 인한 손해에 대하여 책임을 지지 않습니다.</li>
+									</ul>
+									
+									<br>
+									
+									<ul>
+										<li>제10조 (관할)</li>
+										
+										<li>모바일 신분증 검증 중계 서비스와 이용자 간에 발생한 서비스 이용에 관한 분쟁은 대한민국 법을 적용하며, 행정안전부 주소지의 관할 법원에 제기한다.</li>
+									</ul>
+								</div>
+								
+								<div class="btn-area">
+									<button type="button" class="basic full">닫기</button>
+								</div>
+							</div>
+							
+							<div id="lndvdlInfoColctUseAgre" class="policy">
+								<div class="header">개인정보 수집 및 이용 동의</div>
+								
+								<div class="cont">
+									<span class="a11y-hidden">개인정보 수집 및 이용 동의 내용</span>
+									
+									<ul>
+										<li>본인은 행정안전부가 제공하는 "모바일 신분증 검증 중계 서비스" 이용을 위해 아래와 같이 개인정보를 수집·이용하는데 동의합니다.</li>
+										
+										<li>
+											1. 개인정보 수집·이용 항목
+											
+											<ul>
+												<li>- 모바일 신분증 검증 중계 서비스: <strong>이름, 핸드폰번호</strong></li>
+											</ul>
+										</li>
+										
+										<li>
+											2. 개인정보 수집·이용 목적
+											
+											<ul>
+												<li>- 모바일 신분증 검증 중계 서비스: <strong>모바일 신분증 신원정보 제출 PUSH발송 요청</strong></li>
+											</ul>
+										</li>
+										
+										<li>
+											3. 개인정보 보유기간:
+											
+											<ul>
+												<li>- 모바일 신분증 검증 중계 서비스: <strong>목적달성(PUSH발송) 후 즉시 파기</strong></li>
+											</ul>
+										</li>
+										
+										<li>
+											동의를 거부하는 경우에 대한 안내: <br>
+											위의 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.<br>
+											그러나 동의를 거부할 경우 모바일 신분증 검증 중계 서비스 이용에 제한을 받을 수 있습니다.<br>
+										</li>
+									</ul>
+								</div>
+								
+								<div class="btn-area">
+									<button type="button" class="basic full">닫기</button>
+								</div>
+							</div>
+						
+							<div id="esntlIdntfcInfoProcessNtic" class="policy">
+								<div class="header">고유식별정보 처리 고지</div>
+								
+								<div class="cont">
+									<ul>
+										<li>1. 고유식별정보의 처리에 관한 사항</li>
+										
+										<li>“이용기관명”이 제공하는 "서비스명” 이용을 위해 아래와 같이 귀하의 고유식별정보를 처리하고자 합니다.</li>
+										
+										<li>
+											<ul>
+												<li>- 수집 및 이용 항목: <strong>고유식별정보항목</strong></li>
+												
+												<li>- 수집 및 이용 목적: <strong>고유식별정보 수집 및 이용 목적</strong></li>
+												
+												<li>- 보유기간: <strong>00년</strong></li>
+											</ul>
+										</li>
+										
+										<li>법적 처리 근거: 법적근거</li>
+									</ul>
+								</div>
+								
+								<div class="btn-area">
+									<button type="button" class="basic full">닫기</button>
+								</div>
+							</div>
+						
+							<div id="lndvdlInfoThptyProvdAgre" class="policy">
+								<span class="a11y-hidden">개인정보 제3자 제공 동의 내용</span>
+								
+								<div class="header">개인정보 제3자 제공 동의</div>
+								
+								<div class="cont">
+									<ul>
+										<li>본인은 행정안전부가 제공하는 "모바일 신분증 검증 중계 서비스 이용을 위해 아래와 같이 개인정보를 제3자 제공하는데 동의합니다.</li>
+										
+										<li>1. 제공 하는 자: 행정안전부</li>
+										
+										<li>
+											<ul>
+												<li>2. 제공 받는 자</li>
+												
+												<li>① <strong>한국조폐공사</strong></li>
+												
+												<li>② 이용기관명</li>
+											</ul>
+										</li>
+										
+										<li>
+											<ul>
+												<li>3. 제공 목적</li>
+												
+												<li>① 모바일 신분증 앱 운영사: <strong>PUSH 인증 요청</strong></li>
+												
+												<li>② 이용기관명: 이용기관 서비스의 개인정보 제공 목적</li>
+											</ul>
+										</li>
+										
+										<li>
+											<ul>
+												<li>4. 제공 항목:</li>
+												
+												<li>① 모바일 신분증 앱 운영사: <strong>이름, 핸드폰번호</strong></li>
+												
+												<li>② 이용기관명: 개인정보 항목</li>
+											</ul>
+										</li>
+										
+										<li>
+											<ul>
+												<li>5. 제공받는 자의 개인정보 보유기간:</li>
+												
+												<li>① 모바일 신분증 앱 운영사: <strong>목적달성(PUSH발송) 후 즉시 파기</strong></li>
+												
+												<li>② 이용기관 서비스명: 00년</li>
+											</ul>
+										</li>
+										
+										<li>
+											동의를 거부하는 경우에 대한 안내:<br> 위의 개인정보 제3자 제공에 대한 동의를 거부할 권리가 있습니다.<br>
+											그러나 동의를 거부할 경우 모바일 신분증 검증 중계 서비스 이용에 제한을 받을 수 있습니다.<br>
+										</li>
+									</ul>
+								</div>
+								
+								<div class="btn-area">
+									<button type="button" class="basic full" title="닫기">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="pushCrtfc" class="push-crtfc-popup">
+						<span class="a11y-hidden">휴대폰에서 본인확인 완료 후 인증 완료 버튼을 클릭 하세요.</span>
+						
+						<div class="cont">
+							<p>입력하신 휴대폰으로 인증 요청 메시지를 보냈습니다.<br>앱에서 인증을 진행해주세요.</p>
+							
+							<div class="img-box">
+								<div>
+									<img id="selectedIcon">
+									
+									<p>STEP 1<span>[사용자가 선택한 신분증 앱]에서<br>인증요청 확인</span></p>
+								</div>
+								
+								<div>
+									<p>STEP 2<span>제출 정보 확인 및<br>정보 보내기 인증</span></p>
+								</div>
+								
+								<div>
+									<p>STEP 3<span>인증 완료 후 하단의<br>인증 완료 클릭</span></p>
+								</div>
+							</div>
+							
+							<div class="text-box">
+								<p>인증 요청 메시지가 안 온다면?</p>
+								
+								<ul>
+									<li>입력하신 개인정보가 정확한지 확인해 주세요.</li>
+									<li>모바일 신분증 앱 설치 또는 발급하셨는지 확인해 주세요.</li>
+								</ul>
+								
+								<div class="call-box"><p>콜센터(#앱 운영사)<span>0000-0000</span></p></div>
+							</div>
+						</div>
+						
+						<div class="btn-area">
+							<button id="pushCrtfcCmplBtn" type="button" class="basic sky w50 active" title="인증 완료">인증 완료</button>
+							<button id="pushCrtfcCloseBtn" type="button" class="basic white w50 popup-close" title="닫기">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

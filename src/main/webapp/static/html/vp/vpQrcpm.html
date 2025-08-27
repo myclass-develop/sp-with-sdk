@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>SP 테스트 화면 - VP 검증 - QR-CPM</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="SP With Verifier">
+		
+		<link ref rel="icon" href="../../image/favicon.ico">
+		
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/style.css">
+		<link rel="stylesheet" href="../../css/font.css">
+		
+		<script src="../../js/etc/jquery-3.6.0.js"></script>
+		<script src="../../js/etc/base64.min.js"></script>
+  		<script src="../../js/etc/jsQR.js"></script>
+		
+		<script src="../../js/comm/common.js"></script>
+		
+		<script src="../../js/vp/vpQrcpm.js"></script>
+	</head>
+	
+	<body>
+		<div class="wrap">
+			<div class="box-group">
+				<a class="btn selected" href="../vp/vp.html">VP 검증</a>
+				<a class="btn" href="../comm/revp.html">재검증</a>
+				<a class="btn" href="../comm/vpdata.html">VP데이터</a>
+				<a class="btn" href="../comm/util.html">Util</a>
+				<a class="btn" href="../comm/verifyConfig.html">verifyConfig.json 생성</a>
+			</div>
+			
+			<div class="box-group">
+				<a class="btn selected" href="../vp/vpQrcpm.html">QR-CPM</a>
+				<a class="btn" href="../vp/vpQrmpm.html">QR-MPM</a>
+				<a class="btn" href="../vp/vpPush.html">Push</a>
+				<a class="btn" href="../vp/vpWeb2app.html">Web to App</a>
+				<a class="btn" href="../vp/vpPc.html">UI-UX(PC) Sample</a>
+				<a class="btn" href="../vp/vpMobile.html">UI-UX(Mobile) Sample</a>
+			</div>
+			
+			<form id="form" name="form">
+				<div class="box-group">
+					<h1 class="box-tit">VP 검증 - QR-CPM</h1>
+					
+					<p>UI 설명 : 응대 장치에서 신분증 앱의 QR 코드를 스캔 한 QR 정보를 중계 서버로 전달하고, 서비스 제공 전까지 대기한다.</p>
+					
+					<div class="box-group">
+						<button type="button" class="btn" id="trxstsBtn">거래상태조회</button>
+						<button type="button" class="btn" id="resetBtn">초기화</button>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-line">
+							<label for="svcCode">서비스코드</label>
+							<select id="svcCode" name="svcCode" required></select>
+						</div>
+					</div>
+					
+					<div class="box-group">
+						<div class="box-inner" id="qrCodeDiv">
+							<h1 class="box-tit">QR 스캐너</h1>
+							
+							<div class="box" id="frame">
+								<div id="loadingMessage">
+									🎥 비디오 스트림에 액세스 할 수 없습니다<br>웹캠이 활성화되어 있는지 확인하십시오
+								</div>
+								
+								<canvas id="canvas"></canvas>
+							</div>
+						</div>
+						
+						<div class="box-inner">
+							<h1 class="box-tit">QR 스캔결과뷰</h1>
+							
+							<div class="box" id="output">
+								<p id="outputMessage">QR코드를 카메라에 노출시켜 주세요</p>
+								<p id="outputData"></p>
+								<p id="outputData2"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<div class="box-group">
+				<div class="box-inner" id="qrResulstDiv">
+					<h1 class="box-tit">QR 응답결과</h1>
+					
+					<div class="box-line">
+						<label for="qrResultTag">결과</label>
+						<textarea id="qrResultTag"></textarea>
+					</div>
+				</div>
+			
+				<div class="box-inner" id="qrResDiv">
+					<h1 class="box-tit">거래상태</h1>
+					
+					<div class="box-line">
+						<span>거래코드 : </span><span id="trxcodeTag"></span>
+					</div>
+					<div class="box-line">
+						<span>서비스 상태 : </span><span id="trxStsCodeTag"></span>
+					</div>
+					<div class="box-line">
+						<span>VP 검증 결과 여부 : </span><span id="vpVerifyResultTag"></span>
+					</div>
+					<div class="box-line">
+						<span>서비스요청일시 : </span><span id="regDtTag"></span>
+					</div>
+					<div class="box-line">
+						<span>profile 송신일시 : </span><span id="profileSendDtTag"></span>
+					</div>
+					<div class="box-line">
+						<span>VP 수신일시 : </span><span id="vpReceptDtTag"></span>
+					</div>
+					<div class="box-line">
+						<span>이미지 송신일시 : </span><span id="imgSendDtTag"></span>
+					</div>
+					<div class="box-line">
+						<span>최종 상태 : </span><span id="udtDtTag"></span>
+					</div>
+					<div class="box-line">
+						<span>VP Data : </span><span id="vpTag"></span>
+						<textarea id="vpArea"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
