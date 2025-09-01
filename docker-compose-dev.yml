@@ -1,6 +1,6 @@
 services:
   sp-with-sdk:
-    image: 'growis-registry.kr.ncr.ntruss.com/sp-with-sdk:0.0.7'
+    image: 'growis-registry.kr.ncr.ntruss.com/sp-with-sdk:0.0.8'
     container_name: sp-with-sdk
     restart: always
     ports:
@@ -13,3 +13,7 @@ services:
       - LOG_LEVEL=info
       - VERIFY_FILE_PATH=./verifyConfig.dev.json
       - TZ=Asia/Seoul
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
