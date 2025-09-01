@@ -18,7 +18,7 @@
 		     , error_cn
 		     , reg_dt
 		     , udt_dt
-		     , DATEDIFF(SECOND, reg_dt, current_timestamp()) AS trx_time
+		     , TIMESTAMPDIFF(SECOND, reg_dt, current_timestamp()) AS trx_time
 		  FROM tb_trx_info
 		 WHERE trxcode = #{trxcode}
 	</select>
@@ -40,7 +40,7 @@
 			 , #{ifType}
 			 , #{svcCode}
 			 , #{mode}
-			 , NVL(#{trxStsCode}, '0001')
+			 , IFNULL(#{trxStsCode}, '0001')
 			 , current_timestamp()
 		)
 	</insert>
@@ -66,7 +66,7 @@
 			<if test="errorCn != null and !errorCn.equals('')">
 		     , error_cn = #{errorCn}
 			</if>
-		     , vp_verify_result = NVL(#{vpVerifyResult}, 'N')
+		     , vp_verify_result = IFNULL(#{vpVerifyResult}, 'N')
 		     , udt_dt = current_timestamp()
 		 WHERE trxcode = #{trxcode}
 	</update>

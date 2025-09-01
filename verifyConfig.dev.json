@@ -26,15 +26,14 @@
   },
   "services": {
     "zkp.2": {
-      "spName": "개발예제서버",
-      "serviceName": "영지식 생년 성인",
+      "spName": "Nextvend",
+      "serviceName": "zkp-adult",
       "svcCode": "zkp.2",
       "presentType": "2",
       "encryptType": "2",
       "keyType": "2",
-      "attrList": ["zkpyear"],
       "predList": [{"zkpbirth":{"type":"LE","value":"-19"}}],
-      "zkpSchemaName": ["devmdl"]
+      "zkpSchemaName": ["devmdl","mnh","devmep","mrcdev","mfc"]
     }
   },
   "proxy": {
@@ -54,5 +53,12 @@
       "useCallBackYn": "N",
       "caServerCallBackUrl": null
     }
-  ]
+  ],
+  "db": {
+    "provider": "mysql",
+    "url": "jdbc:mysql://db-34kte6-kr.vpc-pub-cdb.ntruss.com:13306/smartboxdb?serverTimezone=Asia/Seoul",
+    "username": "sbuser",
+    "password": "!29EbKkI0ht8O",
+    "driverClassName": "com.mysql.cj.jdbc.Driver"
+  }
 }

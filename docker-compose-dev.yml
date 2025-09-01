@@ -1,6 +1,6 @@
 services:
   sp-with-sdk:
-    image: 'growis-registry.kr.ncr.ntruss.com/sp-with-sdk:0.0.04'
+    image: 'growis-registry.kr.ncr.ntruss.com/sp-with-sdk:0.0.7'
     container_name: sp-with-sdk
     restart: always
     ports:

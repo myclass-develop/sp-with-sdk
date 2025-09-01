@@ -1,14 +1,12 @@
 package mip.mva.sp.config.db;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import mip.mva.sp.comm.enums.MipErrorEnum;
+import mip.mva.sp.comm.exception.SpException;
+import mip.mva.sp.config.ConfigBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
-import org.h2.tools.Server;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -19,12 +17,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.util.ObjectUtils;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import mip.mva.sp.comm.enums.MipErrorEnum;
-import mip.mva.sp.comm.exception.SpException;
-import mip.mva.sp.config.ConfigBean;
+import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * @Project 모바일 운전면허증 서비스 구축 사업
@@ -33,8 +27,8 @@ import mip.mva.sp.config.ConfigBean;
  * @Author Min Gi Ju
  * @Date 2022. 6. 3.
  * @Description DataSource 관리 Controller
- * 
- *              <pre>
+ *
+ * <pre>
  * ==================================================
  * DATE            AUTHOR           NOTE
  * ==================================================
@@ -44,184 +38,126 @@ import mip.mva.sp.config.ConfigBean;
 @Configuration
 public class SpDataSource {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SpDataSource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpDataSource.class);
 
-	private final ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
-	/** 설정정보 */
-	private final ConfigBean configBean;
+    /**
+     * 설정정보
+     */
+    private final ConfigBean configBean;
 
-	/**
-	 * 생성자
-	 * 
-	 * @param applicationContext ApplicationContext
-	 * @param configBean         설정정보
-	 */
-	SpDataSource(ApplicationContext applicationContext, ConfigBean configBean) {
-		this.applicationContext = applicationContext;
-		this.configBean = configBean;
-	}
+    /**
+     * 생성자
+     *
+     * @param applicationContext ApplicationContext
+     * @param configBean         설정정보
+     */
+    SpDataSource(ApplicationContext applicationContext, ConfigBean configBean) {
+        this.applicationContext = applicationContext;
+        this.configBean = configBean;
+    }
 
-	/**
-	 * DataSource 생성 및 Bean 등록
-	 * 
-	 * @MethodName dataSource
-	 * @return DataSource
-	 * @throws SpException
-	 */
-	@Bean
-	DataSource dataSource() throws SpException {
-		HikariConfig hikariConfig = new HikariConfig();
+    /**
+     * DataSource 생성 및 Bean 등록
+     *
+     * @return DataSource
+     * @throws SpException
+     * @MethodName dataSource
+     */
+    @Bean
+    DataSource dataSource() {
+        final HikariConfig hikariConfig = new HikariConfig();
 
-		HikariDataSource hikariDataSource = null;
+        hikariConfig.setDriverClassName(configBean.getVerifyConfig().getDb().getDriverClassName());
+        hikariConfig.setJdbcUrl(configBean.getVerifyConfig().getDb().getUrl());
+        hikariConfig.setUsername(configBean.getVerifyConfig().getDb().getUsername());
+        hikariConfig.setPassword(configBean.getVerifyConfig().getDb().getPassword());
 
-		try {
-			if (ObjectUtils.isEmpty(configBean.getVerifyConfig().getDb())) {
-				try {
-					Server.createTcpServer("-tcp", "-tcpAllowOthers").start();
-				} catch (SQLException e) {
-					throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "Memory Database Create Error!");
-				}
+        return new HikariDataSource(hikariConfig);
+    }
 
-				hikariConfig.setDriverClassName("org.h2.Driver");
-				hikariConfig.setJdbcUrl("jdbc:h2:mem:public");
-				hikariConfig.setUsername("sa");
-				hikariConfig.setPassword("");
+    /**
+     * DataSourceTransactionManager 생성 및 Bean 등록
+     *
+     * @return DataSourceTransactionManager
+     * @throws SpException
+     * @MethodName transactionManager
+     */
+    @Bean
+    DataSourceTransactionManager transactionManager() throws SpException {
+        DataSourceTransactionManager dataSourceTransactionManager = null;
 
-				String sql = "";
+        try {
+            dataSourceTransactionManager = new DataSourceTransactionManager(dataSource());
+        } catch (Exception e) {
+            throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "DataSourceTransactionManager Create Error!");
+        }
 
-				sql += "CREATE TABLE TB_TRX_INFO (";
-				sql += "    TRXCODE CHARACTER VARYING(50) NOT NULL,";
-				sql += "    IF_TYPE CHARACTER VARYING(50) NOT NULL,";
-				sql += "    SVC_CODE CHARACTER VARYING(50) NOT NULL,";
-				sql += "    MODE CHARACTER VARYING(50) NOT NULL,";
-				sql += "    NONCE CHARACTER VARYING(100) DEFAULT NULL,";
-				sql += "    ZKP_NONCE CHARACTER VARYING(100) DEFAULT NULL,";
-				sql += "    VP_VERIFY_RESULT CHARACTER VARYING(1) DEFAULT 'N' NOT NULL,";
-				sql += "    VP CHARACTER LARGE OBJECT DEFAULT NULL,";
-				sql += "    TRX_STS_CODE CHARACTER VARYING(4) DEFAULT '0001' NOT NULL,";
-				sql += "    PROFILE_SEND_DT TIMESTAMP DEFAULT NULL,";
-				sql += "    IMG_SEND_DT TIMESTAMP DEFAULT NULL,";
-				sql += "    VP_RECEPT_DT TIMESTAMP DEFAULT NULL,";
-				sql += "    ERROR_CN CHARACTER VARYING(4000) DEFAULT NULL,";
-				sql += "    REG_DT TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,";
-				sql += "    UDT_DT TIMESTAMP DEFAULT NULL,";
-				sql += "    PRIMARY KEY (TRXCODE)";
-				sql += ")";
+        return dataSourceTransactionManager;
+    }
 
-				Connection connection = null;
+    /**
+     * SqlSessionFactory 생성 및 Bean 등록
+     *
+     * @param dataSource DataSource
+     * @return SqlSessionFactory
+     * @throws SpException
+     * @MethodName sqlSessionFactory
+     */
+    @Bean
+    SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws SpException {
+        SqlSessionFactory sqlSessionFactory = null;
 
-				try (HikariDataSource hikariDataSourceTemp = new HikariDataSource(hikariConfig)) {
-					connection = hikariDataSourceTemp.getConnection();
+        try {
+            SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 
-					connection.prepareStatement(sql).execute();
-				} catch (SQLException e) {
-					throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "Memory Database CREATE TABLE Error!");
-				} finally {
-					try {
-						connection.close();
-					} catch (SQLException e) {
-						LOGGER.error("Memory Database CREATE TABLE Connection Close Error!");
-					}
-				}
-			} else {
-				hikariConfig.setDriverClassName(configBean.getVerifyConfig().getDb().getDriverClassName());
-				hikariConfig.setJdbcUrl(configBean.getVerifyConfig().getDb().getUrl());
-				hikariConfig.setUsername(configBean.getVerifyConfig().getDb().getUsername());
-				hikariConfig.setPassword(configBean.getVerifyConfig().getDb().getPassword());
-			}
+            sqlSessionFactoryBean.setDataSource(dataSource);
+            sqlSessionFactoryBean.setTypeAliasesPackage("mip.mva.sp.**.vo");
 
-			hikariDataSource = new HikariDataSource(hikariConfig);
-		} catch (SpException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "DataSource Error!");
-		}
+            if (ObjectUtils.isEmpty(configBean.getVerifyConfig().getDb())) {
+                sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/h2/*.xml"));
+            } else {
+                sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(
+                        "classpath:/mapper/" + configBean.getVerifyConfig().getDb().getProvider() + "/*.xml"));
+            }
 
-		return hikariDataSource;
-	}
+            org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
 
-	/**
-	 * DataSourceTransactionManager 생성 및 Bean 등록
-	 * 
-	 * @MethodName transactionManager
-	 * @return DataSourceTransactionManager
-	 * @throws SpException
-	 */
-	@Bean
-	DataSourceTransactionManager transactionManager() throws SpException {
-		DataSourceTransactionManager dataSourceTransactionManager = null;
+            configuration.setMapUnderscoreToCamelCase(true);
+            configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
 
-		try {
-			dataSourceTransactionManager = new DataSourceTransactionManager(dataSource());
-		} catch (Exception e) {
-			throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "DataSourceTransactionManager Create Error!");
-		}
+            sqlSessionFactoryBean.setConfiguration(configuration);
 
-		return dataSourceTransactionManager;
-	}
+            sqlSessionFactory = sqlSessionFactoryBean.getObject();
+        } catch (IOException e) {
+            throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "MapperFile Load Error!");
+        } catch (Exception e) {
+            throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "SqlSessionFactory Create Error!");
+        }
 
-	/**
-	 * SqlSessionFactory 생성 및 Bean 등록
-	 * 
-	 * @MethodName sqlSessionFactory
-	 * @param dataSource DataSource
-	 * @return SqlSessionFactory
-	 * @throws SpException
-	 */
-	@Bean
-	SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws SpException {
-		SqlSessionFactory sqlSessionFactory = null;
+        return sqlSessionFactory;
+    }
 
-		try {
-			SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+    /**
+     * SqlSessionTemplate 생성 및 Bean 등록
+     *
+     * @param sqlSessionFactory SqlSessionFactory
+     * @return SqlSessionTemplate
+     * @throws SpException
+     * @MethodName sqlSession
+     */
+    @Bean
+    SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) throws SpException {
+        SqlSessionTemplate sqlSessionTemplate = null;
 
-			sqlSessionFactoryBean.setDataSource(dataSource);
-			sqlSessionFactoryBean.setTypeAliasesPackage("mip.mva.sp.**.vo");
+        try {
+            sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+        } catch (Exception e) {
+            throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "SqlSessionTemplate Create Error!");
+        }
 
-			if (ObjectUtils.isEmpty(configBean.getVerifyConfig().getDb())) {
-				sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/h2/*.xml"));
-			} else {
-				sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(
-						"classpath:/mapper/" + configBean.getVerifyConfig().getDb().getProvider() + "/*.xml"));
-			}
-
-			org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-
-			configuration.setMapUnderscoreToCamelCase(true);
-			configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
-
-			sqlSessionFactoryBean.setConfiguration(configuration);
-
-			sqlSessionFactory = sqlSessionFactoryBean.getObject();
-		} catch (IOException e) {
-			throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "MapperFile Load Error!");
-		} catch (Exception e) {
-			throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "SqlSessionFactory Create Error!");
-		}
-
-		return sqlSessionFactory;
-	}
-
-	/**
-	 * SqlSessionTemplate 생성 및 Bean 등록
-	 * 
-	 * @MethodName sqlSession
-	 * @param sqlSessionFactory SqlSessionFactory
-	 * @return SqlSessionTemplate
-	 * @throws SpException
-	 */
-	@Bean
-	SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) throws SpException {
-		SqlSessionTemplate sqlSessionTemplate = null;
-
-		try {
-			sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-		} catch (Exception e) {
-			throw new SpException(MipErrorEnum.SP_DB_ERROR, null, "SqlSessionTemplate Create Error!");
-		}
-
-		return sqlSessionTemplate;
-	}
+        return sqlSessionTemplate;
+    }
 
 }
