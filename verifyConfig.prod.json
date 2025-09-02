@@ -1,0 +1,64 @@
+{
+  "blockchain": {
+    "account": "growis.sp",
+    "serverDomain": "https://bcdev.mobileid.go.kr:18888",
+    "connectTimeout": "3000",
+    "readTimeout": "3000",
+    "useCache": true,
+    "sdkDetailLog": true
+  },
+  "didWalletFile": {
+    "keymanagerPath": "./nextvend.did.wallet",
+    "keymanagerPassword": "rmfhdnlwm@717",
+    "signKeyId": "nextvend.sp",
+    "encryptKeyId": "nextvend.sp.rsa",
+    "didFilePath": "./nextvend.did"
+  },
+  "sp": {
+    "serverDomain": "https://dev.sp.nextvend.kr",
+    "biImageUrl": "https://kr.object.ncloudstorage.com/growis-common/icon/nextvend/nextvend-icon.png",
+    "biImageBase64": "iVBORw0KGgoAAAANSUhEUgAAAKEAAACeCAYAAABafWrOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA_1JREFUeNrs3TFqVFEUgOFnCNZTuACXEDtFi2QH2gTSmdIyO9AVmM7SsRDBRskGZjotLKa1SyFBRWEElRjQeJ_GHQzeOed8P4SxGl6Yj3vPmztxhkGSJEmSJEmSJEmSJEmSJEnq3KVVPdG916-2_8P1Lh5dv7Es8-I8fzZpD1trennL8929xSqeaHOFFzX7Hwgb9p0KEC8AztYY4bz97KziiTaCvTbjCzJrECcA5mkj4DWnhlgNYFSEaSE2gFerAYyMMCvEF9UARkeYCmJbBbcqAsyAMBPEyVC0jSS_R3iI57t78_ZwDCGIvduHEMR1WA0fQAhib4j328MCQhB7d6f9LCEEsedqeFxpPtxI_vtFhviyPUwhBLF3BxXmwwoIw0Jsq-GywrZcBWFkiIuLFRFCELtCPGwPLyEEsXfjtryEEMTe8-EdCEHsDXE-JDzWq4wwKsT7Q7K3baojjDojpjrWgzAgxGzHehDGhZjmWA_C2FtzimM9CANDzHKsB2F8iOGP9SDMATH0sR6EeWbEsMd6ECaBGPlYD8JcEOfD3_-yDUIQBSGIEIIoCEGEEERBCCKEIApCECEEUVkRjt_mNH4D1XTNIT7EKi_CP4fzDeL-mkO821bDx2gl345BhBBEECEEEUIQQYQQRAhBBBFCECEEEUQIQYQQRBAhBBFCEEGEEEQIQQQRQhAhBBFECEGEEEQQIQQRQhBBhBBECEEEEUIQIQQRRAhBzAURQhAhBBFECEGEEEQQIQQRQhBXC_HK5cvbEILYpbNfv4ajj--HT2dnVkIQ-wE8OT01E4JoBYSwGMQMACEMDPFzg_f05F14gBAGhTgCHFfAH20lzBCEwSBmAxgN4da916-2KkM8-XGaDmA0hOM3Jc2qQnz77etw9CEfwIjbcUmII8DZ509pR5mIM2EpiNkBRr4xKQHxzZdleoDR745TQxzxjQgrFP0tmpQQR4DjNlylDO8TpoJYDWAWhCkg_jsHrgYwE8LQEKN_FAvC4BCzfBIGwqAQv__8Oa0OMCvCMBCf3Ly13wBOh-Jl_hRNCIjnu3vr_sdTEIIIIYggQggihBkhTkCEsDfEh-t-kdUgVvwbk9sRLrISxIoIJ21L3gYRQoEIIYgQ9m4BIoQ9mz-6fiPk5-azQqyI8IGtGcKeHbZVcG5GhLBXBw3ggZsVCHs0zn87DeChu2YIe90FX8uwBWeGmBnh9GIFPM6-1EeHuJl4_jscCjVCvPT82fjPu1ZC858VsTDC9PNfVohZEJaZ_zJCzDATHlTdfrPMiJFXwtLzX6YVMSpC818iiBERmv-SQYw2E5r_Es6IUVZC81_Bu2ZJkiRJkiRJkiRJkiRJkiRJqtNvAQYA1UzcNDMXMIoAAAAASUVORK5CYII=",
+    "isCi": false,
+    "isTelno": false,
+    "checkRequiredPrivacy": true,
+    "checkVcExpirationDate": true,
+    "trxTimeout": 300
+  },
+  "services": {
+    "zkp.2": {
+      "spName": "Nextvend",
+      "serviceName": "zkp-adult",
+      "svcCode": "zkp.2",
+      "presentType": "2",
+      "encryptType": "2",
+      "keyType": "2",
+      "predList": [{"zkpbirth":{"type":"LE","value":"-19"}}],
+      "zkpSchemaName": ["devmdl","mnh","devmep","mrcdev","mfc"]
+    }
+  },
+  "proxy": {
+    "proxyServer": "wss://mvadev.mobileid.go.kr:9090/proxyServer",
+    "proxyConnTimeOut": "60"
+  },
+  "caList": [
+    {
+      "appCode": "100",
+      "appName": "정부앱",
+      "appIcon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMjQwIiB2aWV3Qm94PSIwIDAgMjQwIDI0MCI+DQogIDxnIGlkPSLqt7jro7lfMjM0MDA4IiBkYXRhLW5hbWU9Iuq3uOujuSAyMzQwMDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zMjQgLTMzMikiPg0KICAgIDxyZWN0IGlkPSLsgqzqsIHtmJVfNSIgZGF0YS1uYW1lPSLsgqzqsIHtmJUgNSIgd2lkdGg9IjI0MCIgaGVpZ2h0PSIyNDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMyNCAzMzIpIiBmaWxsPSIjZmZmIi8+DQogICAgPGcgaWQ9Iuq3uOujuV8yMzM5NzgiIGRhdGEtbmFtZT0i6re466O5IDIzMzk3OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzY3IDM4NCkiPg0KICAgICAgPHBhdGggaWQ9Iu2MqOyKpF8yNDE5NjMiIGRhdGEtbmFtZT0i7Yyo7IqkIDI0MTk2MyIgZD0iTTU1MS4wOCw0MTkuNzYzbC00Ni4yMTYsMzkuMDE2TDQ3Mi44LDQ0Ny4yMTFsNDYuMi0zOSwyOS44MSwxMC43NDNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDM1LjQgLTM2NS42ODgpIiBmaWxsPSIjMDkxZjJjIi8+DQogICAgICA8cGF0aCBpZD0i7Yyo7IqkXzI0MTk2NCIgZGF0YS1uYW1lPSLtjKjsiqQgMjQxOTY0IiBkPSJNNjA1LjU2LDQyNi42MThsLTc1LjQwOCw2My42NmExOC42NjUsMTguNjY1LDAsMCwxLTE4LjM2MywzLjI5NGwtNTkuMzMyLTIxLjQsMjkuMTE4LTI0LjU4LDQwLjM0NywxNC41NSw1NC41Mi00Ni4wMjhaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDUyLjQ1NyAtMzU5LjA2MikiIGZpbGw9IiMwMDQ3YTAiLz4NCiAgICAgIDxwYXRoIGlkPSLtjKjsiqRfMjQxOTY1IiBkYXRhLW5hbWU9Iu2MqOyKpCAyNDE5NjUiIGQ9Ik02MDUuNTYsNDA3LjU2NGwtOC4zMDcsNy4wMTMtMjkuMTE3LDI0LjU3OC0yLjI2OC0uODA1LTI5LjgxLTEwLjc0My00Ni4yLDM5LTI5LjExNy0xMC41LTguMjg3LTIuOTgsMzEuNTkzLTI2LjY3OSw0My43ODEtMzYuOTY0YTE4LjY2MiwxOC42NjIsMCwwLDEsMTguMzU5LTMuM2wxOS42NzksNy4wOTQsNy42MzEsMi43MzdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDUyLjQ1NyAtMzg1LjA4KSIgZmlsbD0iI2NkMmUzYSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBtdWx0aXBseTtpc29sYXRpb246IGlzb2xhdGUiLz4NCiAgICA8L2c+DQogIDwvZz4NCjwvc3ZnPg0K",
+      "caPushUrl": "https://psh.mobileid.go.kr",
+      "caDid": "did:kr:mobileid:C5XSaSqexRSvUJVE3jxGaqNJRfA",
+      "caPubkey": "zEJ1So8pW7fw4QSMhNmo63Wa9MwDEKYPY6fL7gvz8u4z",
+      "appLinkAos": "mobileid",
+      "appLinkIos": "MobileID",
+      "useCallBackYn": "N",
+      "caServerCallBackUrl": null
+    }
+  ],
+  "db": {
+    "provider": "mysql",
+    "url": "jdbc:mysql://db-34kte6-kr.vpc-pub-cdb.ntruss.com:13306/smartboxdb?serverTimezone=Asia/Seoul",
+    "username": "sbuser",
+    "password": "!29EbKkI0ht8O",
+    "driverClassName": "com.mysql.cj.jdbc.Driver"
+  }
+}
