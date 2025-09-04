@@ -1,0 +1,19 @@
+services:
+  sp-with-sdk:
+    image: 'growis-registry.kr.ncr.ntruss.com/sp-with-sdk:0.0.8'
+    container_name: sp-with-sdk
+    restart: always
+    ports:
+      - "8280:8280"
+    volumes:
+      - ./logs:/logs
+    environment:
+      - SERVER_PORT=8280
+      - SPRING_PROFILES_ACTIVE=prod
+      - LOG_LEVEL=info
+      - VERIFY_FILE_PATH=./verifyConfig.prod.json
+      - TZ=Asia/Seoul
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
