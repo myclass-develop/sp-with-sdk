@@ -26,8 +26,8 @@
   },
   "services": {
     "zkp.2": {
-      "spName": "Nextvend",
-      "serviceName": "zkp-adult",
+      "spName": "그로위즈",
+      "serviceName": "넥스트벤드",
       "svcCode": "zkp.2",
       "presentType": "2",
       "encryptType": "2",

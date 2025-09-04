@@ -466,7 +466,7 @@ public class VerifyManager implements InitializingBean {
 				throw new SpException(MipErrorEnum.SP_CONFIG_ERROR, null, "spName is empty");
 			}
 
-			String serviceName = service.getSpName();
+			String serviceName = service.getServiceName();
 
 			if (ObjectUtils.isEmpty(serviceName)) {
 				throw new SpException(MipErrorEnum.SP_CONFIG_ERROR, null, "serviceName is empty");

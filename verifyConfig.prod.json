@@ -15,7 +15,7 @@
     "didFilePath": "./nextvend.did"
   },
   "sp": {
-    "serverDomain": "https://dev.sp.nextvend.kr",
+    "serverDomain": "https://sp.nextvend.kr",
     "biImageUrl": "https://kr.object.ncloudstorage.com/growis-common/icon/nextvend/nextvend-icon.png",
     "biImageBase64": "iVBORw0KGgoAAAANSUhEUgAAAKEAAACeCAYAAABafWrOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA_1JREFUeNrs3TFqVFEUgOFnCNZTuACXEDtFi2QH2gTSmdIyO9AVmM7SsRDBRskGZjotLKa1SyFBRWEElRjQeJ_GHQzeOed8P4SxGl6Yj3vPmztxhkGSJEmSJEmSJEmSJEmSJEnq3KVVPdG916-2_8P1Lh5dv7Es8-I8fzZpD1trennL8929xSqeaHOFFzX7Hwgb9p0KEC8AztYY4bz97KziiTaCvTbjCzJrECcA5mkj4DWnhlgNYFSEaSE2gFerAYyMMCvEF9UARkeYCmJbBbcqAsyAMBPEyVC0jSS_R3iI57t78_ZwDCGIvduHEMR1WA0fQAhib4j328MCQhB7d6f9LCEEsedqeFxpPtxI_vtFhviyPUwhBLF3BxXmwwoIw0Jsq-GywrZcBWFkiIuLFRFCELtCPGwPLyEEsXfjtryEEMTe8-EdCEHsDXE-JDzWq4wwKsT7Q7K3baojjDojpjrWgzAgxGzHehDGhZjmWA_C2FtzimM9CANDzHKsB2F8iOGP9SDMATH0sR6EeWbEsMd6ECaBGPlYD8JcEOfD3_-yDUIQBSGIEIIoCEGEEERBCCKEIApCECEEUVkRjt_mNH4D1XTNIT7EKi_CP4fzDeL-mkO821bDx2gl345BhBBEECEEEUIQQYQQRAhBBBFCECEEEUQIQYQQRBAhBBFCEEGEEEQIQQQRQhAhBBFECEGEEEQQIQQRQhBBhBBECEEEEUIQIQQRRAhBzAURQhAhBBFECEGEEEQQIQQRQhBXC_HK5cvbEILYpbNfv4ajj--HT2dnVkIQ-wE8OT01E4JoBYSwGMQMACEMDPFzg_f05F14gBAGhTgCHFfAH20lzBCEwSBmAxgN4da916-2KkM8-XGaDmA0hOM3Jc2qQnz77etw9CEfwIjbcUmII8DZ509pR5mIM2EpiNkBRr4xKQHxzZdleoDR745TQxzxjQgrFP0tmpQQR4DjNlylDO8TpoJYDWAWhCkg_jsHrgYwE8LQEKN_FAvC4BCzfBIGwqAQv__8Oa0OMCvCMBCf3Ly13wBOh-Jl_hRNCIjnu3vr_sdTEIIIIYggQggihBkhTkCEsDfEh-t-kdUgVvwbk9sRLrISxIoIJ21L3gYRQoEIIYgQ9m4BIoQ9mz-6fiPk5-azQqyI8IGtGcKeHbZVcG5GhLBXBw3ggZsVCHs0zn87DeChu2YIe90FX8uwBWeGmBnh9GIFPM6-1EeHuJl4_jscCjVCvPT82fjPu1ZC858VsTDC9PNfVohZEJaZ_zJCzDATHlTdfrPMiJFXwtLzX6YVMSpC818iiBERmv-SQYw2E5r_Es6IUVZC81_Bu2ZJkiRJkiRJkiRJkiRJkiRJqtNvAQYA1UzcNDMXMIoAAAAASUVORK5CYII=",
     "isCi": false,
@@ -26,8 +26,8 @@
   },
   "services": {
     "zkp.2": {
-      "spName": "Nextvend",
-      "serviceName": "zkp-adult",
+      "spName": "그로위즈",
+      "serviceName": "넥스트벤드",
       "svcCode": "zkp.2",
       "presentType": "2",
       "encryptType": "2",
@@ -56,9 +56,9 @@
   ],
   "db": {
     "provider": "mysql",
-    "url": "jdbc:mysql://db-34kte6-kr.vpc-pub-cdb.ntruss.com:13306/smartboxdb?serverTimezone=Asia/Seoul",
-    "username": "sbuser",
-    "password": "!29EbKkI0ht8O",
+    "url": "jdbc:mysql://db-37lktg-kr.vpc-pub-cdb.ntruss.com:13306/nextvend?serverTimezone=Asia/Seoul",
+    "username": "nvuser",
+    "password": "!39EbDkI0ht8O",
     "driverClassName": "com.mysql.cj.jdbc.Driver"
   }
 }
