@@ -1,7 +1,7 @@
 {
   "blockchain": {
     "account": "growis.sp",
-    "serverDomain": "https://bcdev.mobileid.go.kr:18888",
+    "serverDomain": "https://bcc.mobileid.go.kr:18888",
     "connectTimeout": "3000",
     "readTimeout": "3000",
     "useCache": true,
@@ -33,11 +33,11 @@
       "encryptType": "2",
       "keyType": "2",
       "predList": [{"zkpbirth":{"type":"LE","value":"-19"}}],
-      "zkpSchemaName": ["devmdl","mnh","devmep","mrcdev","mfc"]
+      "zkpSchemaName": ["mdlschema","mnh","mep","mrcshema","mfc"]
     }
   },
   "proxy": {
-    "proxyServer": "wss://mvadev.mobileid.go.kr:9090/proxyServer",
+    "proxyServer": "wss://mva01.mobileid.go.kr:9090/proxyServer",
     "proxyConnTimeOut": "60"
   },
   "caList": [
