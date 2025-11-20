@@ -56,7 +56,7 @@
   ],
   "db": {
     "provider": "mysql",
-    "url": "jdbc:mysql://db-37lktg-kr.vpc-pub-cdb.ntruss.com:13306/nextvend?serverTimezone=Asia/Seoul",
+    "url": "jdbc:mysql://db-37lktg.vpc-cdb.ntruss.com:13306/nextvend?serverTimezone=Asia/Seoul",
     "username": "nvuser",
     "password": "!39EbDkI0ht8O",
     "driverClassName": "com.mysql.cj.jdbc.Driver"

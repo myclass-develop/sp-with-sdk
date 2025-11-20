@@ -56,7 +56,7 @@
   ],
   "db": {
     "provider": "mysql",
-    "url": "jdbc:mysql://db-34kte6-kr.vpc-pub-cdb.ntruss.com:13306/smartboxdb?serverTimezone=Asia/Seoul",
+    "url": "jdbc:mysql://db-34kte6.vpc-cdb.ntruss.com:13306/smartboxdb?serverTimezone=Asia/Seoul",
     "username": "sbuser",
     "password": "!29EbKkI0ht8O",
     "driverClassName": "com.mysql.cj.jdbc.Driver"
