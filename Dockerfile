@@ -1,4 +1,4 @@
-FROM maven:3.8.6-openjdk-8 AS dependencies
+FROM maven:3.9.11-eclipse-temurin-8 AS dependencies
 
 WORKDIR /opt/app
 COPY pom.xml .
@@ -6,7 +6,7 @@ COPY libs /opt/app/libs
 
 RUN mvn -B -e org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
 
-FROM maven:3.8.6-openjdk-8 AS builder
+FROM maven:3.9.11-eclipse-temurin-8 AS builder
 
 WORKDIR /opt/app
 
@@ -17,7 +17,7 @@ COPY src /opt/app/src
 
 RUN mvn -B -e clean install -DskipTests
 
-FROM openjdk:8-jre-alpine3.7
+FROM eclipse-temurin:8u472-b08-jre-ubi9-minimal
 
 COPY --from=builder /opt/app/target/*.war app.war
 
